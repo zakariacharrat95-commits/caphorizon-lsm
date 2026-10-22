@@ -26,7 +26,7 @@ body{margin:0;background:var(--bg);color:var(--text);font:400 1.0625rem/1.65 "So
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:4px}
-.wrap{width:min(1140px,100% - 2.5rem);margin-inline:auto}
+.wrap{width:min(1920px,100% - clamp(2.5rem,5.6vw,7.2rem));margin-inline:auto}
 h1,h2,h3,h4{font-family:Saira,"Segoe UI",Arial,sans-serif;line-height:1.15;margin:0}
 h2{font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:600}
 h3{font-size:1.2rem;font-weight:600}
@@ -324,6 +324,109 @@ p,li,.lead,.bio{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
 @media (prefers-reduced-motion:reduce){.splash *{animation-duration:.01s!important;animation-delay:0s!important}}
 .schoolmini{display:inline-flex;align-items:center;gap:.6rem;padding:.35rem .7rem .35rem .4rem;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:#0B1B2E;font:600 .85rem "Source Sans 3",Arial,sans-serif}
 .schoolmini img{height:46px;width:auto}
+
+/* ===== FULL-SCREEN DESKTOP LAYOUT ===== */
+html{font-size:clamp(16px,.22vw + 13.2px,19px)}
+@media (min-width:1280px){
+  .hero-grid{grid-template-columns:1.1fr .9fr;gap:clamp(3rem,5vw,7rem)}
+  .compass{width:clamp(380px,27vw,560px)}
+  .hero h1{font-size:clamp(3.2rem,3.9vw,5.2rem);max-width:19ch}
+  .lead{font-size:1.28rem;max-width:62ch}
+  .head p,.bio,.rs-cta p{max-width:72ch}
+  section{padding:clamp(4rem,6vw,6.5rem) 0}
+  .doors{gap:1.4rem}.door{min-height:210px;padding:1.8rem}
+  .rs-grid,.reach{gap:1.4rem}
+}
+@media (min-width:1700px){
+  .laws{grid-template-columns:repeat(3,1fr)}
+  .logo3d{width:min(620px,100%)}
+}
+
+/* ===== SIDE "NAVIGATION SCALE" (fills the edges on wide screens) ===== */
+.scale{display:none}
+@media (min-width:1360px){
+  .scale{display:block;position:fixed;top:0;bottom:0;width:clamp(30px,2.6vw,50px);z-index:3;pointer-events:none;overflow:hidden}
+  .scale.l{left:0;background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 9%,transparent),transparent)}
+  .scale.r{right:0;background:linear-gradient(270deg,color-mix(in srgb,var(--accent) 9%,transparent),transparent)}
+  .scale::before{content:"";position:absolute;top:0;bottom:0;width:14px;opacity:.55;
+    background:
+      repeating-linear-gradient(180deg,var(--accent) 0 1.5px,transparent 1.5px 12px) 0 0/14px 100% no-repeat,
+      repeating-linear-gradient(180deg,var(--accent) 0 1.5px,transparent 1.5px 60px) 0 0/14px 100% no-repeat;
+    -webkit-mask:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
+  .scale.l::before{left:10px;background:
+      repeating-linear-gradient(180deg,var(--accent) 0 1.5px,transparent 1.5px 12px) 0 0/7px 100% no-repeat,
+      repeating-linear-gradient(180deg,var(--accent) 0 2px,transparent 2px 60px) 0 0/14px 100% no-repeat}
+  .scale.r::before{right:10px;background:
+      repeating-linear-gradient(180deg,var(--accent) 0 1.5px,transparent 1.5px 12px) 100% 0/7px 100% no-repeat,
+      repeating-linear-gradient(180deg,var(--accent) 0 2px,transparent 2px 60px) 100% 0/14px 100% no-repeat}
+  .scale span{position:absolute;top:50%;left:50%;white-space:nowrap;font:600 .7rem Saira,Arial,sans-serif;letter-spacing:.38em;text-transform:uppercase;color:var(--muted);opacity:.8}
+  .scale.l span{transform:translate(-50%,-50%) rotate(-90deg);margin-left:8px}
+  .scale.r span{transform:translate(-50%,-50%) rotate(90deg);margin-left:-8px}
+  .scale i{position:absolute;width:11px;height:11px;background:var(--accent);transform:rotate(45deg);top:0;transition:top .15s linear;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+  .scale.l i{left:calc(10px + 14px + 4px)}
+  .scale.r i{right:calc(10px + 14px + 4px)}
+}
+@media (prefers-reduced-motion:reduce){.scale i{transition:none}}
+
+/* ===== CHAT WIDGET ===== */
+:root{--me-bg:var(--ink);--me-fg:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--me-bg:var(--gold-soft);--me-fg:var(--ink)}}
+:root[data-theme="dark"]{--me-bg:var(--gold-soft);--me-fg:var(--ink)}
+.cw{position:fixed;right:calc(env(safe-area-inset-right,0px) + clamp(16px,3.4vw,64px));bottom:calc(env(safe-area-inset-bottom,0px) + 20px);z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:.7rem;font-family:"Source Sans 3","Segoe UI",Arial,sans-serif}
+.cw[hidden]{display:none}
+.cw-av{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:50% 18%;flex:none;border:2px solid var(--gold-soft);background:var(--surface)}
+.cw-launch{position:relative;width:62px;height:62px;border-radius:50%;border:0;padding:0;cursor:pointer;background:var(--bg);box-shadow:0 10px 28px -8px rgba(11,27,46,.55),0 0 0 3px var(--gold-soft);transition:transform .2s}
+.cw-launch:hover{transform:scale(1.06)}
+.cw-launch img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 18%}
+.cw-launch .dot{position:absolute;right:1px;bottom:2px;width:15px;height:15px;border-radius:50%;background:#2DBE6C;border:3px solid var(--bg)}
+.cw-launch .ping{position:absolute;inset:0;border-radius:50%;border:2px solid var(--gold-soft);animation:cwping 2.2s ease-out infinite}
+@keyframes cwping{from{transform:scale(1);opacity:.8}to{transform:scale(1.7);opacity:0}}
+.cw-teaser{position:relative;display:flex;gap:.7rem;align-items:center;max-width:min(340px,calc(100vw - 100px));padding:.8rem 2.2rem .8rem .8rem;border-radius:18px 18px 4px 18px;background:var(--bg);color:var(--text);border:1px solid var(--line);box-shadow:0 14px 34px -12px rgba(11,27,46,.45);cursor:pointer;animation:cwin .45s cubic-bezier(.2,.9,.25,1.1)}
+.cw-teaser[hidden],.cw-panel[hidden]{display:none}
+.cw-teaser b{display:block;font:600 .95rem Saira,Arial,sans-serif;line-height:1.2}
+.cw-teaser span{display:block;font-size:.98rem;line-height:1.35;color:var(--muted);text-align:left}
+.cw-x{position:absolute;display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;color:var(--muted);cursor:pointer;border-radius:50%;width:32px;height:32px;font-size:0}
+.cw-x svg{width:16px;height:16px}
+.cw-x:hover{background:var(--surface);color:var(--text)}
+.cw-teaser .cw-x{top:4px;right:4px}
+@keyframes cwin{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+.cw-panel{width:min(392px,calc(100vw - 24px));height:min(600px,calc(100vh - 120px));display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:var(--bg);color:var(--text);border:1px solid var(--line);box-shadow:0 30px 70px -20px rgba(11,27,46,.6);animation:cwin .35s cubic-bezier(.2,.9,.25,1.05)}
+.cw-head{display:flex;align-items:center;gap:.75rem;padding:.8rem .9rem;background:var(--ink);color:#fff;position:relative}
+.cw-head .cw-av{width:42px;height:42px}
+.cw-head b{display:block;font:600 1rem Saira,Arial,sans-serif;line-height:1.15}
+.cw-head small{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:#C9D3DE}
+.cw-head small::before{content:"";width:8px;height:8px;border-radius:50%;background:#2DBE6C}
+.cw-head .cw-x{position:static;margin-left:auto;color:#fff}
+.cw-head .cw-x:hover{background:rgba(255,255,255,.14);color:#fff}
+.cw-msgs{flex:1;overflow-y:auto;padding:1rem .9rem;display:flex;flex-direction:column;gap:.55rem;background:var(--surface);scroll-behavior:smooth}
+.cw-row{display:flex;gap:.5rem;align-items:flex-end;animation:cwin .3s ease}
+.cw-row.me{justify-content:flex-end}
+.cw-row .cw-av{width:28px;height:28px;border-width:1.5px}
+.cw-b{max-width:80%;padding:.6rem .85rem;border-radius:16px;font-size:1rem;line-height:1.4;overflow-wrap:anywhere;text-align:left;white-space:pre-wrap}
+.cw-row.bot .cw-b{background:var(--bg);border:1px solid var(--line);border-bottom-left-radius:4px;color:var(--text)}
+.cw-row.me .cw-b{background:var(--me-bg);color:var(--me-fg);border-bottom-right-radius:4px}
+.cw-typing .cw-b{display:flex;gap:4px;padding:.8rem .9rem}
+.cw-typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:cwdot 1s infinite ease-in-out}
+.cw-typing i:nth-child(2){animation-delay:.15s}.cw-typing i:nth-child(3){animation-delay:.3s}
+@keyframes cwdot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+.cw-chips{display:flex;flex-wrap:wrap;gap:.45rem;padding:0 0 0 36px;animation:cwin .3s ease}
+.cw-chips button,.cw-wa{font:600 .94rem "Source Sans 3",Arial,sans-serif;min-height:40px;padding:0 .95rem;border-radius:999px;border:1.5px solid var(--accent);background:var(--bg);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:.45rem}
+.cw-chips button:hover{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.cw-chips button.ghost{border-color:var(--line);color:var(--muted)}
+.cw-wa{background:#1FA855;border-color:#1FA855;color:#fff}
+.cw-wa svg{width:18px;height:18px}
+.cw-form{display:flex;gap:.5rem;padding:.65rem .75rem;border-top:1px solid var(--line);background:var(--bg)}
+.cw-form input{flex:1;min-width:0;min-height:44px;padding:.5rem .9rem;border-radius:999px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);font:400 1rem "Source Sans 3",Arial,sans-serif}
+.cw-form input:disabled{opacity:.55}
+.cw-send{flex:none;width:44px;height:44px;border-radius:50%;border:0;background:var(--me-bg);color:var(--me-fg);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.cw-send:disabled{opacity:.45;cursor:default}
+.cw-send svg{width:20px;height:20px}
+@media (max-width:520px){
+  .cw{right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 12px)}
+  .cw-panel{height:min(78vh,620px)}
+}
+@media (prefers-reduced-motion:reduce){.cw *{animation:none!important;scroll-behavior:auto}}
+
 footer{border-top:1px solid var(--line);padding:1.6rem 0 2.2rem;color:var(--muted);font-size:.92rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:center}
 .theme{background:none;border:1.5px solid var(--line);color:var(--text);border-radius:999px;min-height:44px;padding:0 .9rem;font:inherit;cursor:pointer}
@@ -658,6 +761,29 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
   </div>
 </footer>
 <div class="toast" id="toast" role="status"></div>
+<div class="scale l" aria-hidden="true"><span>Le Havre · 49°29′N</span><i id="scl"></i></div>
+<div class="scale r" aria-hidden="true"><span>Cap Horizon LSM · 0°06′E</span><i id="scr"></i></div>
+<div class="cw" id="cw" hidden>
+  <div class="cw-teaser" id="cw-teaser" hidden role="button" tabindex="0">
+    <img class="cw-av cw-photo" alt="">
+    <div><b>Zakaria CHARRAT</b><span id="cw-tmsg"></span></div>
+    <button class="cw-x" type="button" id="cw-tx" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="cw-panel" id="cw-panel" hidden role="dialog" aria-modal="false" aria-labelledby="cw-title">
+    <div class="cw-head">
+      <img class="cw-av cw-photo" alt="">
+      <div><b id="cw-title">Zakaria CHARRAT</b><small id="cw-sub"></small></div>
+      <button class="cw-x" type="button" id="cw-px" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="cw-msgs" id="cw-msgs" aria-live="polite"></div>
+    <form class="cw-form" id="cw-form" autocomplete="off">
+      <input id="cw-in" type="text" maxlength="600" aria-label="Message">
+      <button class="cw-send" id="cw-go" type="submit" aria-label="Send"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.4 20.4l17.45-7.48a1 1 0 000-1.84L3.4 3.6a.993.993 0 00-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z"/></svg></button>
+    </form>
+  </div>
+  <button class="cw-launch" id="cw-launch" type="button" aria-label="Chat"><span class="ping"></span><img class="cw-photo" alt=""><span class="dot"></span></button>
+</div>
+
 <dialog class="lb" id="lb" aria-label="Document"><div class="lb-in"><img id="lb-img" alt=""><div class="lb-bar"><button type="button" id="lb-prev" aria-label="Previous">‹</button><span id="lb-cap"></span><span><button type="button" id="lb-next" aria-label="Next">›</button> <button type="button" id="lb-close" data-t="close"></button></span></div></div></dialog>
 
 <script>
@@ -1094,6 +1220,153 @@ if(!reduce&&needle){
   if(seen||(location.hash&&location.hash!=='#home')){sp.remove(); return;}
   document.getElementById('sp-skip').addEventListener('click',hide); sp.addEventListener('click',hide);
   setTimeout(hide,matchMedia('(prefers-reduced-motion: reduce)').matches?900:4700);
+})();
+
+
+/* ---------- side scale: scroll marker ---------- */
+(function(){
+  var a=document.getElementById('scl'), b=document.getElementById('scr'); if(!a||!b) return;
+  function up(){var h=document.documentElement.scrollHeight-innerHeight, p=h>0?Math.min(1,Math.max(0,scrollY/h)):0, y=(8+p*84)+'%'; a.style.top=y; b.style.top=y;}
+  addEventListener('scroll',up,{passive:true}); addEventListener('resize',up); up();
+})();
+
+/* ---------- chat widget (collects info, sends it to WhatsApp) ---------- */
+(function(){
+  var WA='33766960842';
+  var C={
+    fr:{sub:'Répond via WhatsApp',teaser:'Marhaba 👋 Comment puis-je vous aider ?',ph:'Écrivez votre réponse…',close:'Fermer',open:'Discuter avec Zakaria',
+      hello:'Marhaba 👋 Comment puis-je vous aider ?',
+      needs:['Logistique & supply chain','Maritime & portuaire','Recherche & études','Autre demande'],
+      askName:'Avec plaisir. Comment vous appelez-vous ?',
+      askCo:function(n){return 'Enchanté '+n+' ! Pour quelle entreprise ou organisation écrivez-vous ?';},
+      askContact:'Un email ou un numéro pour vous recontacter ? (facultatif)',
+      askMsg:'Dernière question : décrivez-moi brièvement votre besoin.',
+      skip:'Passer',
+      done:function(n){return 'Merci '+n+' ! Je vous redirige vers mon WhatsApp avec votre message prêt à envoyer. Il vous suffit d’appuyer sur « Envoyer ».';},
+      btn:'Ouvrir WhatsApp',again:'Nouvelle demande',
+      hi:'Bonjour Zakaria,',name:'Nom',co:'Entreprise',need:'Besoin',ct:'Contact',msg:'Message',src:'Message envoyé depuis le site Cap Horizon LSM'},
+    en:{sub:'Replies via WhatsApp',teaser:'Marhaba 👋 How can I help you?',ph:'Type your answer…',close:'Close',open:'Chat with Zakaria',
+      hello:'Marhaba 👋 How can I help you?',
+      needs:['Logistics & supply chain','Maritime & port','Research & studies','Something else'],
+      askName:'Happy to help. What is your name?',
+      askCo:function(n){return 'Nice to meet you, '+n+'! Which company or organisation are you writing for?';},
+      askContact:'An email or phone number so I can get back to you? (optional)',
+      askMsg:'Last question: please describe your need briefly.',
+      skip:'Skip',
+      done:function(n){return 'Thank you '+n+'! I am redirecting you to my WhatsApp with your message ready to send. Just tap “Send”.';},
+      btn:'Open WhatsApp',again:'New request',
+      hi:'Hello Zakaria,',name:'Name',co:'Company',need:'Need',ct:'Contact',msg:'Message',src:'Message sent from the Cap Horizon LSM website'}
+  };
+  function c(){return C[L]||C.en;}
+  var root=document.getElementById('cw'), teaser=document.getElementById('cw-teaser'), panel=document.getElementById('cw-panel'),
+      launch=document.getElementById('cw-launch'), box=document.getElementById('cw-msgs'), form=document.getElementById('cw-form'),
+      inp=document.getElementById('cw-in'), go=document.getElementById('cw-go');
+  if(!root) return;
+  var photo=document.querySelector('.founder img'); var src=photo?photo.getAttribute('src'):'';
+  document.querySelectorAll('.cw-photo').forEach(function(i){if(src) i.src=src;});
+  var step=0, data={need:'',name:'',co:'',ct:'',msg:''}, busy=false, started=false, shown=false;
+  var ICON_WA='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.14-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35zM12.05 21.8h-.01a9.87 9.87 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 01-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 012.9 6.99c0 5.45-4.44 9.88-9.9 9.88zM20.52 3.45A11.8 11.8 0 0012.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 005.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89 0-3.18-1.24-6.17-3.48-8.41z"/></svg>';
+
+  function scroll(){box.scrollTop=box.scrollHeight;}
+  function addMsg(text,who){
+    var r=document.createElement('div'); r.className='cw-row '+who;
+    if(who==='bot'){var im=document.createElement('img'); im.className='cw-av'; im.alt=''; if(src) im.src=src; r.appendChild(im);}
+    var b=document.createElement('div'); b.className='cw-b'; b.textContent=text; r.appendChild(b);
+    box.appendChild(r); scroll(); return r;
+  }
+  function clearChips(){box.querySelectorAll('.cw-chips').forEach(function(x){x.remove();});}
+  function chips(list,cb){
+    clearChips(); var d=document.createElement('div'); d.className='cw-chips';
+    list.forEach(function(it){var b=document.createElement('button'); b.type='button'; b.textContent=it.t; if(it.ghost) b.className='ghost'; b.addEventListener('click',function(){cb(it.v);}); d.appendChild(b);});
+    box.appendChild(d); scroll();
+  }
+  function botSay(text,after){
+    busy=true; inp.disabled=true; go.disabled=true;
+    var ty=document.createElement('div'); ty.className='cw-row bot cw-typing';
+    var im=document.createElement('img'); im.className='cw-av'; im.alt=''; if(src) im.src=src; ty.appendChild(im);
+    var b=document.createElement('div'); b.className='cw-b'; b.innerHTML='<i></i><i></i><i></i>'; ty.appendChild(b);
+    box.appendChild(ty); scroll();
+    setTimeout(function(){ty.remove(); addMsg(text,'bot'); busy=false; inp.disabled=false; go.disabled=false; if(after) after(); if(panel.hidden===false&&!matchMedia('(pointer: coarse)').matches) inp.focus();},matchMedia('(prefers-reduced-motion: reduce)').matches?60:650);
+  }
+  function applyLang(){
+    var k=c();
+    document.getElementById('cw-tmsg').textContent=k.teaser;
+    document.getElementById('cw-sub').textContent=k.sub;
+    inp.placeholder=k.ph; launch.setAttribute('aria-label',k.open);
+    document.querySelectorAll('.cw-x').forEach(function(x){x.setAttribute('aria-label',k.close);});
+  }
+  function ask(){
+    var k=c();
+    if(step===0){botSay(k.hello,function(){chips(k.needs.map(function(n){return {t:n,v:n};}),function(v){answer(v);});});}
+    else if(step===1){botSay(k.askName);}
+    else if(step===2){botSay(k.askCo(data.name),function(){chips([{t:k.skip,v:'',ghost:true}],function(v){answer(v);});});}
+    else if(step===3){botSay(k.askContact,function(){chips([{t:k.skip,v:'',ghost:true}],function(v){answer(v);});});}
+    else if(step===4){botSay(k.askMsg);}
+  }
+  function build(){
+    var k=c(), L1=[k.hi,'',k.name+' : '+data.name];
+    if(data.co) L1.push(k.co+' : '+data.co);
+    L1.push(k.need+' : '+data.need);
+    if(data.ct) L1.push(k.ct+' : '+data.ct);
+    L1.push('',k.msg+' : '+data.msg,'','— '+k.src);
+    return 'https://wa.me/'+WA+'?text='+encodeURIComponent(L1.join('\n'));
+  }
+  function finish(){
+    var k=c(), url=build(); step=5;
+    botSay(k.done(data.name),function(){
+      var row=document.createElement('div'); row.className='cw-chips';
+      var a=document.createElement('a'); a.className='cw-wa'; a.href=url; a.target='_blank'; a.rel='noopener'; a.innerHTML=ICON_WA+'<span></span>'; a.lastChild.textContent=k.btn; row.appendChild(a);
+      var n=document.createElement('button'); n.type='button'; n.className='ghost'; n.textContent=k.again; n.addEventListener('click',reset); row.appendChild(n);
+      box.appendChild(row); scroll();
+      inp.disabled=true; go.disabled=true;
+    });
+    window.open(url,'_blank','noopener');
+  }
+  function answer(v){
+    if(busy||step>4) return;
+    v=(v||'').trim(); var k=c();
+    if(step===0&&!v) return;
+    if(step===1&&!v) return;
+    if(step===4&&!v) return;
+    clearChips();
+    if(v) addMsg(v,'me'); else addMsg(k.skip,'me');
+    if(step===0) data.need=v; else if(step===1) data.name=v; else if(step===2) data.co=v; else if(step===3) data.ct=v; else if(step===4) data.msg=v;
+    inp.value='';
+    if(step===4){finish(); return;}
+    step++; ask();
+  }
+  function reset(){box.innerHTML=''; data={need:'',name:'',co:'',ct:'',msg:''}; step=0; inp.disabled=false; go.disabled=false; ask();}
+  form.addEventListener('submit',function(e){e.preventDefault(); answer(inp.value);});
+
+  function openPanel(){
+    teaser.hidden=true; panel.hidden=false; launch.hidden=true;
+    try{sessionStorage.setItem('chlsm-chat-teaser','1');}catch(e){}
+    if(!started){started=true; ask();} else if(!inp.disabled&&!matchMedia('(pointer: coarse)').matches) inp.focus();
+  }
+  function closePanel(){panel.hidden=true; launch.hidden=false; launch.focus();}
+  function closeTeaser(e){if(e) e.stopPropagation(); teaser.hidden=true; try{sessionStorage.setItem('chlsm-chat-teaser','1');}catch(x){}}
+  launch.addEventListener('click',openPanel);
+  teaser.addEventListener('click',openPanel);
+  teaser.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault(); openPanel();}});
+  document.getElementById('cw-tx').addEventListener('click',closeTeaser);
+  document.getElementById('cw-px').addEventListener('click',closePanel);
+  addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden) closePanel();});
+  document.querySelectorAll('.lang button').forEach(function(b){b.addEventListener('click',function(){applyLang();});});
+  applyLang();
+
+  /* appears 2 seconds after the home page is visible (after the intro splash) */
+  function onHome(){var h=(location.hash||'#home'); return h==='#home';}
+  function reveal(){
+    if(shown) return; shown=true; root.hidden=false;
+    var seen=false; try{seen=sessionStorage.getItem('chlsm-chat-teaser')==='1';}catch(e){}
+    if(!seen&&onHome()) teaser.hidden=false;
+  }
+  function waitSplash(){
+    var sp=document.getElementById('splash');
+    if(sp&&!sp.classList.contains('gone')){setTimeout(waitSplash,250); return;}
+    setTimeout(reveal,2000);
+  }
+  waitSplash();
 })();
 
 applyText(); calc(); teu(); wh(); route();
