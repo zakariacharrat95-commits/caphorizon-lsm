@@ -486,6 +486,29 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;
 #v-about .alt{background:color-mix(in srgb,var(--surface) 38%,transparent)}
 @media (max-width:860px){.about-bg img{width:150vw;max-width:none}:root{--lo:.22}}
 @media (prefers-reduced-motion:reduce){.about-bg .fl{animation:none}.about-bg{transition:none}}
+
+/* ===== PHONE FIXES ===== */
+html,body{overflow-x:clip;max-width:100%}
+.brand{min-width:0;flex:0 1 auto}
+@media (max-width:480px){
+  header .wrap{gap:.5rem}
+  .tools{gap:.35rem;flex:none}
+  .lang button{min-width:38px;min-height:38px;font-size:.85rem}
+  .burger{min-width:40px;min-height:40px}
+  .brand{gap:.4rem}
+  .brand img{height:12px}.brand .emb{height:29px}
+  .cw{right:12px;max-width:calc(100vw - 24px)}
+  .cw-teaser{max-width:calc(100vw - 24px)}
+  .cw-launch .ping{display:none}
+}
+@media (max-width:370px){
+  .brand img{height:10.5px}.brand .emb{height:26px}
+  .lang button{min-width:34px}
+}
+
+@media (max-width:700px){
+  p,li,li *,.lead,.bio,.head p,.panel p,.reach p,.door p,.law .more p,.routelist p,.side p,.result p,.note{text-align:left;hyphens:manual;-webkit-hyphens:manual}
+}
 </style>
 </head>
 <body>
