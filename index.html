@@ -645,6 +645,68 @@ img{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;user-select
 .director{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(9,22,38,.72)!important}
 .crane .trolley,.crane .spreader{animation:none!important}
 @media (max-width:860px){.cine-bg .slide:nth-child(2),.cine-bg .slide:nth-child(4){animation:cineX4 28s infinite!important}.cine-bg .slide:nth-child(2){animation-delay:7s!important}.cine-bg .slide:nth-child(4){animation-delay:21s!important}.cp-glint,.sea-glint{animation:none!important}}
+
+/* ===== port traffic figure ===== */
+.pc-vol{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .6rem;margin-bottom:.9rem}
+.pc-vol small{flex-basis:100%}
+.pc-vol b{font:700 1.7rem Saira,Arial,sans-serif;color:var(--accent);line-height:1.1}
+.pc-vol span{color:var(--muted)}
+.pc-vol em{flex-basis:100%;font-style:normal;font-size:.8rem;color:var(--muted)}
+
+/* ===== PHONE ONLY: hero keeps its layout, the images now move (desktop untouched) ===== */
+@media (max-width:860px){
+  /* every scene slowly zooms out / drifts, each in its own direction */
+  .cine-bg .slide:nth-child(1){animation:cineX4 28s infinite,kenp1 28s infinite!important}
+  .cine-bg .slide:nth-child(2){animation:cineX4 28s 7s infinite,kenp2 28s 7s infinite!important}
+  .cine-bg .slide:nth-child(3){animation:cineX4 28s 14s infinite,kenp3 28s 14s infinite!important}
+  .cine-bg .slide:nth-child(4){animation:cineX4 28s 21s infinite,kenp4 28s 21s infinite!important}
+  @keyframes kenp1{0%{transform:scale(1.26) translate3d(3%,1.5%,0)}34%{transform:scale(1) translate3d(0,0,0)}100%{transform:scale(1) translate3d(0,0,0)}}
+  @keyframes kenp2{0%{transform:scale(1.3) translate3d(-3%,0,0)}34%{transform:scale(1.02) translate3d(1%,0,0)}100%{transform:scale(1.02) translate3d(1%,0,0)}}
+  @keyframes kenp3{0%{transform:scale(1.22) translate3d(0,2%,0)}34%{transform:scale(1) translate3d(0,0,0)}100%{transform:scale(1) translate3d(0,0,0)}}
+  @keyframes kenp4{0%{transform:scale(1.28) translate3d(-2%,-1%,0)}34%{transform:scale(1.02) translate3d(2%,0,0)}100%{transform:scale(1.02) translate3d(2%,0,0)}}
+  /* the sea: light sweeping across and ripples flowing toward the viewer */
+  .s-sea .sea-glint{inset:50% -25% 0 -25%!important;background:linear-gradient(100deg,transparent 22%,rgba(255,255,255,.26) 46%,transparent 68%)!important;background-size:100% 100%!important;animation:seasweep 6s ease-in-out infinite alternate!important;mix-blend-mode:screen}
+  .s-sea::after{content:"";position:absolute;left:-10%;right:-10%;top:52%;bottom:-40%;pointer-events:none;mix-blend-mode:screen;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 11px,rgba(255,255,255,.16) 11px 13px,rgba(255,255,255,0) 13px 30px);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 35%,#000 100%);mask-image:linear-gradient(180deg,transparent 0,#000 35%,#000 100%);
+    animation:seaflow 3.4s linear infinite}
+  .cine-bg:not([data-a="3"]) .s-sea::after,.cine-bg:not([data-a="3"]) .s-sea .sea-glint{animation-play-state:paused!important}
+  @keyframes seasweep{from{transform:translateX(-12%)}to{transform:translateX(12%)}}
+  @keyframes seaflow{from{transform:translateY(-30px)}to{transform:translateY(0)}}
+}
+@media (max-width:860px) and (prefers-reduced-motion:reduce){.cine-bg .slide{animation:cineX4 28s infinite!important}.cine-bg .slide:nth-child(2){animation-delay:7s!important}.cine-bg .slide:nth-child(3){animation-delay:14s!important}.cine-bg .slide:nth-child(4){animation-delay:21s!important}.s-sea::after{animation:none}}
+
+/* ===== SEA SCENE: the sea now moves on desktop exactly like on phone (rules below apply to desktop only; phone block above is untouched) ===== */
+@media (min-width:861px){
+  .cine-bg .slide:nth-child(4){animation:cineX4 28s 21s infinite,kenp4 28s 21s infinite!important}
+  @keyframes kenp4{0%{transform:scale(1.28) translate3d(-2%,-1%,0)}34%{transform:scale(1.02) translate3d(2%,0,0)}100%{transform:scale(1.02) translate3d(2%,0,0)}}
+  .s-sea .sea-glint{inset:50% -25% 0 -25%!important;background:linear-gradient(100deg,transparent 22%,rgba(255,255,255,.26) 46%,transparent 68%)!important;background-size:100% 100%!important;animation:seasweep 6s ease-in-out infinite alternate!important;mix-blend-mode:screen}
+  .s-sea::after{content:"";position:absolute;left:-10%;right:-10%;top:52%;bottom:-40%;pointer-events:none;mix-blend-mode:screen;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,0) 0 11px,rgba(255,255,255,.16) 11px 13px,rgba(255,255,255,0) 13px 30px);
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 35%,#000 100%);mask-image:linear-gradient(180deg,transparent 0,#000 35%,#000 100%);
+    animation:seaflow 3.4s linear infinite}
+  .cine-bg:not([data-a="3"]) .s-sea::after,.cine-bg:not([data-a="3"]) .s-sea .sea-glint{animation-play-state:paused!important}
+  @keyframes seasweep{from{transform:translateX(-12%)}to{transform:translateX(12%)}}
+  @keyframes seaflow{from{transform:translateY(-30px)}to{transform:translateY(0)}}
+}
+@media (min-width:861px) and (prefers-reduced-motion:reduce){.cine-bg .slide:nth-child(4){animation:cineX4 28s 21s infinite!important}.s-sea::after,.s-sea .sea-glint{animation:none!important}}
+
+/* ===== SEA SCENE (all screens): visible swell, alternate bands of water drift in opposite directions ===== */
+.s-sea .sea-water{display:block!important;clip-path:none!important;filter:none!important;will-change:transform;
+  -webkit-mask-image:linear-gradient(180deg,transparent 49%,#000 56%),repeating-linear-gradient(180deg,#000 0 12px,transparent 12px 24px);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(180deg,transparent 49%,#000 56%),repeating-linear-gradient(180deg,#000 0 12px,transparent 12px 24px);mask-composite:intersect;
+  animation:swellA 4.6s ease-in-out infinite!important}
+.s-sea .sea-water::after{content:"";position:absolute;inset:0;background-image:inherit;background-size:cover;background-position:center;will-change:transform;
+  -webkit-mask-image:linear-gradient(180deg,transparent 49%,#000 56%),repeating-linear-gradient(180deg,transparent 0 12px,#000 12px 24px);-webkit-mask-composite:source-in;
+  mask-image:linear-gradient(180deg,transparent 49%,#000 56%),repeating-linear-gradient(180deg,transparent 0 12px,#000 12px 24px);mask-composite:intersect;
+  animation:swellB 4.6s ease-in-out infinite}
+@keyframes swellA{0%,100%{transform:translate3d(-10px,-2px,0)}50%{transform:translate3d(10px,3px,0)}}
+@keyframes swellB{0%,100%{transform:translate3d(10px,2px,0)}50%{transform:translate3d(-10px,-3px,0)}}
+.cine-bg:not([data-a="3"]) .s-sea .sea-water,.cine-bg:not([data-a="3"]) .s-sea .sea-water::after{animation-play-state:paused!important}
+@media (max-width:860px){.s-sea .sea-water{animation:swellA2 4.2s ease-in-out infinite!important}.s-sea .sea-water::after{animation:swellB2 4.2s ease-in-out infinite}
+  @keyframes swellA2{0%,100%{transform:translate3d(-16px,-3px,0)}50%{transform:translate3d(16px,4px,0)}}
+  @keyframes swellB2{0%,100%{transform:translate3d(16px,3px,0)}50%{transform:translate3d(-16px,-4px,0)}}}
+@media (prefers-reduced-motion:reduce){.s-sea .sea-water,.s-sea .sea-water::after{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1420,6 +1482,21 @@ function hl(){Object.keys(paths).forEach(function(p){var on=activePort?p===activ
 function pick(k){activePort=activePort===k?null:k; if(activePort) region=(region==='all'||PD[k].r===region)?region:'all'; renderPorts(); if(window.__mapFocus) window.__mapFocus(activePort);}
 var PF={"ny": {"en": ["Largest port on the US East Coast", "Gateway to the US Northeast market"], "fr": ["Premier port de la côte Est des États-Unis", "Porte d’entrée du marché du Nord-Est américain"]}, "montreal": {"en": ["Major container port of Eastern Canada", "Gateway to the Great Lakes region"], "fr": ["Grand port à conteneurs de l’Est du Canada", "Porte d’entrée de la région des Grands Lacs"]}, "santos": {"en": ["Largest port in Latin America", "Hub for Brazilian trade"], "fr": ["Premier port d’Amérique latine", "Plaque tournante du commerce brésilien"]}, "tanger": {"en": ["Major transshipment hub at the Strait of Gibraltar", "Among the largest container ports in Africa and the Mediterranean"], "fr": ["Grand hub de transbordement au détroit de Gibraltar", "Parmi les plus grands ports à conteneurs d’Afrique et de Méditerranée"]}, "dakar": {"en": ["Strategic Atlantic gateway of West Africa", "Access to inland markets such as Mali"], "fr": ["Porte atlantique stratégique de l’Afrique de l’Ouest", "Accès aux marchés de l’intérieur comme le Mali"]}, "abidjan": {"en": ["One of the busiest ports of West Africa", "Gateway for landlocked neighbouring countries"], "fr": ["L’un des ports les plus actifs d’Afrique de l’Ouest", "Porte d’entrée des pays voisins enclavés"]}, "durban": {"en": ["One of the busiest container ports in Africa", "Main gateway to South Africa’s economic heartland"], "fr": ["L’un des ports à conteneurs les plus actifs d’Afrique", "Principale porte d’entrée du cœur économique sud-africain"]}, "rotterdam": {"en": ["Largest port in Europe", "Dense rail, barge and road connections"], "fr": ["Premier port d’Europe", "Connexions denses par rail, fleuve et route"]}, "dubai": {"en": ["Largest port in the Middle East", "Linked to a major free zone"], "fr": ["Premier port du Moyen-Orient", "Adossé à une grande zone franche"]}, "singapore": {"en": ["One of the world’s top transshipment hubs", "Connects Asia, Europe and Oceania"], "fr": ["L’un des premiers hubs de transbordement au monde", "Relie l’Asie, l’Europe et l’Océanie"]}, "shanghai": {"en": ["World’s busiest container port", "Gateway to the Yangtze River Delta"], "fr": ["Premier port à conteneurs au monde", "Porte d’entrée du delta du Yangtsé"]}};
 var portIco='<svg viewBox="0 0 64 64" aria-hidden="true"><rect x="0" y="0" width="64" height="64" rx="14" fill="#0B1B2E"/><path d="M10 46h44" stroke="#D9B56A" stroke-width="2"/><path d="M16 46V20h3v26M24 46V20h3v26M14 20h34l-8-6H22z" fill="#D9B56A"/><rect x="34" y="38" width="8" height="8" fill="#5E86AE"/><rect x="43" y="38" width="8" height="8" fill="#C0392B"/><rect x="38" y="30" width="8" height="8" fill="#E8C678"/><path d="M8 52q6-3 12 0t12 0 12 0 12 0" fill="none" stroke="#5E86AE" stroke-width="2"/></svg>';
+var TEU={
+ ny:{v:'8.9',y:'2025',s:'Savills Ports Report 2026'},
+ montreal:{v:'1.52',y:'2025',s:'Montreal Port Authority'},
+ santos:{v:'5.9',y:'2025',s:'Autoridade Portuária de Santos (APS)'},
+ tanger:{v:'≈ 11.1',y:'2025',s:'CargoLinked (non officiel / unofficial)'},
+ dakar:{v:'0.91',y:'2025',s:'Port Autonome de Dakar'},
+ abidjan:{v:'1.70',y:'2025',s:'Port Autonome d’Abidjan'},
+ durban:{v:'≈ 2.4',y:'2025',s:'Transnet / KZN Industrial News (Pier 1 + Pier 2)'},
+ rotterdam:{v:'13.8',y:'2024',s:'JOC Top 50 (S&P Global)'},
+ dubai:{v:'15.5',y:'2024',s:'JOC Top 50 (S&P Global)'},
+ singapore:{v:'41.1',y:'2024',s:'JOC Top 50 (S&P Global)'},
+ shanghai:{v:'51.5',y:'2024',s:'JOC Top 50 (S&P Global)'}
+};
+function volHtml(k){var d=TEU[k]; if(!d) return ''; var fr=L==='fr', v=fr?d.v.replace('.',','):d.v;
+  return '<div class="pc-vol"><small>'+(fr?'Trafic conteneurs':'Container traffic')+'</small><b>'+v+' M</b><span>'+(fr?'EVP':'TEU')+' · '+d.y+'</span><em>'+(fr?'Source : ':'Source: ')+esc(d.s)+'</em></div>';}
 function info(){
   var c=document.getElementById('pcard');
   if(!activePort){c.className='pcard on'; c.innerHTML='<p style="grid-column:1/-1;color:var(--muted)">'+esc(t('p_hint'))+'</p>'; return;}
@@ -1430,7 +1507,7 @@ function info(){
    +'<div class="k"><b>'+d.toLocaleString(loc)+'</b><span>'+esc(t('p_dist'))+'</span></div>'
    +'<div class="k"><b>'+Math.round(d/20/24)+'–'+Math.round(d/14/24)+'</b><span>'+esc(t('p_days2'))+'</span></div>'
    +'<div><small>'+esc(t('p_via'))+'</small><b>'+esc(tx(p.v))+'</b></div>'
-   +'<div class="pc-adv"><small>'+esc(t('p_adv'))+'</small><ul>'+li(tx(PF[activePort]))+'</ul></div>'
+   +'<div class="pc-adv">'+volHtml(activePort)+'<small>'+esc(t('p_adv'))+'</small><ul>'+li(tx(PF[activePort]))+'</ul></div>'
    +'<div class="pc-quote"><small>'+esc(t('p_cost'))+'</small><p>'+esc(t('p_cost_t'))+'</p><a class="btn solid" href="'+wa+'" target="_blank" rel="noopener">'+esc(t('p_quote'))+'</a></div>';
 }
 
@@ -1783,7 +1860,13 @@ applyText(); calc(); teu(); wh(); route();
 
 /* ---------- background scenes: animate only the visible one ---------- */
 (function(){var bg=document.querySelector('.cine-bg'); if(!bg) return;
-  function tick(){var t=(document.timeline&&document.timeline.currentTime)||performance.now(); var a=Math.floor((t%28000)/7000); if(a!==window.__cineA){window.__cineA=a; bg.setAttribute('data-a',a);}}
+  function cineTime(){
+    if(matchMedia('(max-width:860px)').matches){
+      try{var sl=bg.querySelector('.slide'), an=sl.getAnimations().filter(function(x){return x.animationName==='cineX4';})[0]; if(an&&an.currentTime!=null) return +an.currentTime;}catch(e){}
+    }
+    return (document.timeline&&document.timeline.currentTime)||performance.now();
+  }
+  function tick(){var t=cineTime(); var a=Math.floor((t%28000)/7000); if(a!==window.__cineA){window.__cineA=a; bg.setAttribute('data-a',a);}}
   tick(); setInterval(tick,250);
 })();
 </script>
