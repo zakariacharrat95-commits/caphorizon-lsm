@@ -1037,6 +1037,10 @@ footer .wrap{padding-right:clamp(90px,8vw,130px)}
 @media (max-width:980px){#v-tools .calc{grid-template-columns:1fr!important}}
 @media (max-width:560px){#v-tools .out{grid-template-columns:1fr!important}.floor{grid-template-columns:repeat(20,1fr)}.tnav{top:68px;border-radius:18px}}
 @media (prefers-reduced-motion:reduce){.voyage .ship,.trucks svg,.boxes span{animation:none}}
+/* ===== Navigator 3D ===== */
+.nv-w{fill:url(#nvw);stroke:rgba(217,181,106,.32)}
+.nv-sec .nv-ic{filter:drop-shadow(0 1.5px 1.5px rgba(0,0,0,.65))}
+.nv-dial{filter:drop-shadow(0 30px 28px rgba(11,27,46,.5)) drop-shadow(0 4px 5px rgba(11,27,46,.4))!important}
 /* ===== Navigator ===== */
 #v-home .doors{grid-template-columns:repeat(5,1fr)!important}
 .navi{display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:clamp(1.4rem,4vw,3rem);align-items:center;margin:0 0 2.2rem;padding:clamp(1rem,2.5vw,2rem);border-radius:28px;background:var(--bg);border:1.5px solid var(--line);box-shadow:0 30px 60px -45px rgba(11,27,46,.5)}
@@ -2180,7 +2184,7 @@ if(!reduce&&needle){
 
 /* ---------- chat widget (collects info, sends it to WhatsApp) ---------- */
 (function(){
-  var WA='33766960842';
+  var WA='212644936541';
   var C={
     fr:{sub:'Répond via WhatsApp',teaser:'Bonjour 👋 Comment puis-je vous aider ?',ph:'Ou écrivez ici…',phName:'Votre prénom…',phNote:'Un mot suffit…',close:'Fermer',open:'Discuter avec Insaf',
       back:'↩ Retour',direct:'💬 Écrire directement sur WhatsApp',skipName:'Je préfère ne pas dire',
@@ -2601,13 +2605,23 @@ applyText(); calc(); teu(); wh(); route();
   var dial=document.getElementById('nv-dial'), card=document.getElementById('nv-card'), NS='http://www.w3.org/2000/svg', cx=200, cy=200, cur=0, target=0, sel=0, running=false;
   function P(r,a){var t=(a-90)*Math.PI/180; return [cx+r*Math.cos(t),cy+r*Math.sin(t)];}
   function wedge(r1,r2,a0,a1){var p1=P(r2,a0),p2=P(r2,a1),p3=P(r1,a1),p4=P(r1,a0); return 'M'+p1+' A'+r2+' '+r2+' 0 0 1 '+p2+' L'+p3+' A'+r1+' '+r1+' 0 0 0 '+p4+' Z';}
-  var h='<defs><linearGradient id="nvg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A5C24"/><stop offset=".3" stop-color="#F3D88F"/><stop offset=".55" stop-color="#B08838"/><stop offset=".8" stop-color="#FBE7B0"/><stop offset="1" stop-color="#8C6828"/></linearGradient><radialGradient id="nvh" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#22426A"/><stop offset="1" stop-color="#081626"/></radialGradient></defs>';
-  h+='<circle cx="200" cy="200" r="192" fill="url(#nvh)"/><circle cx="200" cy="200" r="186" fill="none" stroke="url(#nvg)" stroke-width="7"/>';
-  for(var a=0;a<360;a+=5){var maj=a%45===0, q1=P(maj?168:174,a), q2=P(180,a); h+='<line x1="'+q1[0].toFixed(1)+'" y1="'+q1[1].toFixed(1)+'" x2="'+q2[0].toFixed(1)+'" y2="'+q2[1].toFixed(1)+'" stroke="#D9B56A" stroke-opacity="'+(maj?.9:.45)+'" stroke-width="'+(maj?2:1)+'"/>';}
+  var h='<defs><linearGradient id="nvg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7A5C24"/><stop offset=".3" stop-color="#F3D88F"/><stop offset=".55" stop-color="#B08838"/><stop offset=".8" stop-color="#FBE7B0"/><stop offset="1" stop-color="#8C6828"/></linearGradient><radialGradient id="nvh" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#22426A"/><stop offset="1" stop-color="#081626"/></radialGradient>'
+   +'<linearGradient id="nvb1" x1=".15" y1="0" x2=".85" y2="1"><stop offset="0" stop-color="#FFF3CC"/><stop offset=".18" stop-color="#E9C773"/><stop offset=".4" stop-color="#8A6224"/><stop offset=".55" stop-color="#5A3F14"/><stop offset=".72" stop-color="#C79A45"/><stop offset=".88" stop-color="#F6DE9B"/><stop offset="1" stop-color="#7A5520"/></linearGradient>'
+   +'<linearGradient id="nvb2" x1=".85" y1="1" x2=".15" y2="0"><stop offset="0" stop-color="#FBE7B0"/><stop offset=".3" stop-color="#A57A2C"/><stop offset=".6" stop-color="#4C340F"/><stop offset="1" stop-color="#E7C87E"/></linearGradient>'
+   +'<radialGradient id="nvf" cx=".38" cy=".3" r=".95"><stop offset="0" stop-color="#2A4D7A"/><stop offset=".45" stop-color="#112742"/><stop offset="1" stop-color="#050E19"/></radialGradient>'
+   +'<radialGradient id="nvw" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#fff" stop-opacity=".02"/><stop offset="1" stop-color="#fff" stop-opacity=".08"/></radialGradient>'
+   +'<linearGradient id="nvnl" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7A5518"/><stop offset=".5" stop-color="#FFF0BE"/><stop offset="1" stop-color="#C79A45"/></linearGradient>'
+   +'<linearGradient id="nvnd" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3E2A0B"/><stop offset=".6" stop-color="#8A6224"/><stop offset="1" stop-color="#5A3F14"/></linearGradient>'
+   +'<radialGradient id="nvd" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#3C6397"/><stop offset=".5" stop-color="#14304F"/><stop offset="1" stop-color="#050E19"/></radialGradient>'
+   +'<linearGradient id="nvgl" x1=".1" y1="0" x2=".7" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".34"/><stop offset=".42" stop-color="#fff" stop-opacity=".07"/><stop offset=".43" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+   +'<filter id="nvs" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="4" dy="7" stdDeviation="3.5" flood-color="#000" flood-opacity=".55"/></filter>'
+   +'<filter id="nvin" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="4"/></filter></defs>';
+  h+='<circle cx="200" cy="200" r="197" fill="url(#nvb1)"/><circle cx="200" cy="200" r="197" fill="none" stroke="#FFF3CC" stroke-opacity=".55" stroke-width="1.2"/><circle cx="200" cy="200" r="188" fill="url(#nvb2)"/><circle cx="200" cy="200" r="186" fill="none" stroke="#2A1B06" stroke-opacity=".7" stroke-width="1.5"/><circle cx="200" cy="200" r="178" fill="url(#nvf)"/><circle cx="200" cy="200" r="178" fill="none" stroke="#000" stroke-opacity=".6" stroke-width="3" filter="url(#nvin)" clip-path="circle(178px at 200px 200px)"/><circle cx="200" cy="200" r="150" fill="none" stroke="#D9B56A" stroke-opacity=".12"/><circle cx="200" cy="200" r="58" fill="none" stroke="#D9B56A" stroke-opacity=".2"/><circle cx="200" cy="200" r="176" fill="none" stroke="#D9B56A" stroke-opacity=".5" stroke-width="1"/>';
+  for(var a=0;a<360;a+=5){var maj=a%45===0, q1=P(maj?162:168,a), q2=P(174,a); h+='<line x1="'+q1[0].toFixed(1)+'" y1="'+q1[1].toFixed(1)+'" x2="'+q2[0].toFixed(1)+'" y2="'+q2[1].toFixed(1)+'" stroke="#D9B56A" stroke-opacity="'+(maj?.9:.45)+'" stroke-width="'+(maj?2:1)+'"/>';}
   S.forEach(function(sx,i){var a0=i*45-22.5+1.5, a1=i*45+22.5-1.5, c=P(118,i*45); h+='<g class="nv-sec" data-i="'+i+'" tabindex="-1"><path class="nv-w" d="'+wedge(62,162,a0,a1)+'"/><g transform="translate('+(c[0]-15).toFixed(1)+' '+(c[1]-15).toFixed(1)+')" class="nv-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+IC[sx.i]+'</svg></g></g>';});
-  h+='<g class="nv-needle" id="nv-needle"><path d="M200 44 L211 200 L200 212 L189 200 Z" fill="url(#nvg)"/><path d="M200 44 L200 212 L189 200 Z" fill="#000" fill-opacity=".18"/></g>';
-  h+='<g class="nv-hub" id="nv-hub" tabindex="0" role="button"><circle cx="200" cy="200" r="40" fill="url(#nvh)" stroke="url(#nvg)" stroke-width="3"/><g transform="translate(186 186)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F3D88F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+IC.chat+'</svg></g></g>';
-  dial.innerHTML=h; dial.setAttribute('tabindex','0');
+  h+='<g class="nv-needle" id="nv-needle"><g filter="url(#nvs)"><path d="M200 44 L211 200 L200 212 L189 200 Z" fill="url(#nvg)"/><path d="M200 44 L200 212 L189 200 Z" fill="url(#nvnd)"/><path d="M200 44 L211 200 L200 212 Z" fill="url(#nvnl)"/><path d="M200 44 L200 212" stroke="#fff" stroke-opacity=".55" stroke-width=".8"/><path d="M200 44 L211 200 L200 212 L189 200 Z" fill="none" stroke="#FFF0BE" stroke-opacity=".6" stroke-width=".8"/><path d="M200 262 L208 200 L200 190 L192 200 Z" fill="#C9D3DE"/><path d="M200 262 L200 190 L192 200 Z" fill="#6D7E92"/><path d="M200 262 L208 200 L200 190 Z" fill="#F4F7FA"/></g></g>';
+  h+='<g class="nv-hub" id="nv-hub" tabindex="0" role="button"><circle cx="200" cy="200" r="46" fill="url(#nvb1)" filter="url(#nvs)"/><circle cx="200" cy="200" r="40" fill="url(#nvd)" stroke="url(#nvg)" stroke-width="4"/><ellipse cx="190" cy="184" rx="20" ry="10" fill="#fff" fill-opacity=".22" transform="rotate(-28 190 184)" pointer-events="none"/><g transform="translate(186 186)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F3D88F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+IC.chat+'</svg></g></g>';
+  h+='<g pointer-events="none"><path d="M62 112 A150 150 0 0 1 300 50 A185 185 0 0 0 62 112 Z" fill="url(#nvgl)" opacity=".7"/><circle cx="200" cy="200" r="178" fill="url(#nvgl)" opacity=".55"/></g>'; dial.innerHTML=h; dial.setAttribute('tabindex','0');
   var needle=document.getElementById('nv-needle');
   function spin(){if(running) return; running=true; requestAnimationFrame(function step(){var d=((target-cur)%360+540)%360-180; cur+=d*0.14; needle.setAttribute('transform','rotate('+cur.toFixed(2)+' 200 200)'); if(Math.abs(d)>0.1) requestAnimationFrame(step); else {cur=target; running=false;}});}
   function choose(i,fromDrag){sel=(i+8)%8; target=sel*45; spin(); dial.querySelectorAll('.nv-sec').forEach(function(g){g.classList.toggle('on',+g.getAttribute('data-i')===sel);}); renderCard();}
